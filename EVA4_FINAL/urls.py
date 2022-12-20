@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from finalApp.views import Login, listadoReserva, crearReserva, eliminarReserva, editarReserva, listaReservas, reserva_detalle
+from finalApp.views import listadoReserva, crearReserva, eliminarReserva, editarReserva, listaReservas, reserva_detalle
 from django.views.generic.base import TemplateView
 
 urlpatterns = [

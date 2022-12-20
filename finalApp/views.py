@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import render, redirect
 #Importar modelo empleado
 from .models import Reserva
@@ -14,16 +15,26 @@ from .serializers import ReservaSerializers
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
+import pytz
 
 # Create your views here.
-
-def Login(request):
-    return render(request, 'login.html')
-
 def listadoReserva(request):
     reservas = Reserva.objects.all()
+    datSend = []
+    for r in reservas:
+        obj = {
+                "id": r.id,
+                "fechaReserva": r.fechaReserva,
+                "horaReserva": r.horaReserva.astimezone(pytz.timezone("America/Santiago")).strftime("%H:%M"),
+                "nombreResponsable": r.nombreResponsable,
+                "telefono": r.telefono,
+                "estado": r.estado,
+                "observacion": r.observacion,
+            }
+        datSend.append(obj)
+
     data = {
-        'reservas' : reservas
+        'reservas' : datSend
     }
     return render(request, "reserva/reservas.html", data)
 
@@ -74,24 +85,26 @@ def editarReserva(request, id):
 # Api con datos de la base de datos y serializador
 # El método GET obtiene todos los empleados
 # POST a guardar un nuevo registro
-@api_view(['GET', 'POST'])
+@api_view(['GET', 'POST', 'DELETE', 'PUT'])
 def listaReservas(request):
-    if (request.method == 'GET'):
+    if request.method == 'GET':
         #Obtener los datos de empleados
         reservas = Reserva.objects.all()
         #Serializar los datos
         serializer = ReservaSerializers(reservas, many = True)
         #Retornar los datos serializados
         return Response(serializer.data)
-    if (request.method == 'POST'):
+    if request.method == 'POST':
         serializer = Reserva(data = request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status = status.HTTP_201_CREATED)
+    if request.method == 'DELETE':
+        Reserva.delete()
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def reserva_detalle(request,pk):
+def reserva_detalle(request, pk):
     # Verificar que la reserva exista
     try:
         reserva = Reserva.objects.get(pk=pk)

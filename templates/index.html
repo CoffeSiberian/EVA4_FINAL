@@ -1,44 +1,79 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+	{% load static%}
 
-  {% load static%}
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Sistemas de Reservas</title>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+			crossorigin="anonymous"
+		/>
+		<link rel="stylesheet" href="{%static 'css/bootstrap.min.css '%}" />
+	</head>
+	<body class="container mt-5">
+		{% if user.is_authenticated %}
+		<div class="alert alert-info display-1 text-center">
+			Sistemas de Reservas
+		</div>
 
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sistemas de Reservas</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <link rel="stylesheet" href="{%static 'css/bootstrap.min.css '%}">
-  </head>
-  <body class="container mt-5">
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="card text-bg-info">
+					<img
+						src="{% static 'img/res.png'%}"
+						class="card-img-top"
+						width="300px"
+						height="200px"
+						alt="..."
+					/>
+					<a href="/reservas" class="btn btn-success w-100 mt-1"
+						>Ir a Reservas</a
+					>
+				</div>
+			</div>
 
-    <div class="alert alert-info display-1 text-center">
-        Sistemas de Reservas
-    </div>
-  
-    <div class="row">
-        <div class="col-sm-4">
-          <div class="card text-bg-info">
-            <img src="{% static 'img/res.png'%}" class="card-img-top" width="300px" height="200px" alt="...">
-            <a href="/reservas" class="btn btn-success w-100 mt-1" >Ir a Reservas</a> 
-          </div>
-        </div>
+			<div class="col-sm-4">
+				<div class="card text-bg-info">
+					<img
+						src="{% static 'img/admin.jpeg'%}"
+						class="card-img-top"
+						width="300px"
+						height="200px"
+						alt="..."
+					/>
+					<a href="/admin" class="btn btn-warning w-100 mt-1">Ir al Admin</a>
+				</div>
+			</div>
 
-        <div class="col-sm-4">
-          <div class="card text-bg-info">
-            <img src="{% static 'img/admin.jpeg'%}" class="card-img-top" width="300px" height="200px" alt="...">
-            <a href="/admin" class="btn btn-warning w-100 mt-1" >Ir al Admin</a>
-          </div>
-        </div>
+			<div class="col-sm-4">
+				<div class="card text-bg-danger">
+					<img
+						src="{% static 'img/api.png'%}"
+						class="card-img-top"
+						width="300px"
+						height="200px"
+						alt="..."
+					/>
+					<a href="/ReservaApi" class="btn btn-info w-100 mt-1"
+						>Ir a Api Reservas</a
+					>
+				</div>
+			</div>
+		</div>
 
-        <div class="col-sm-4">
-          <div class="card text-bg-danger">
-            <img src="{% static 'img/api.png'%}" class="card-img-top" width="300px" height="200px" alt="...">
-            <a href="/ReservaApi" class="btn btn-info w-100 mt-1">Ir a Api Reservas</a>
-          </div>
-        </div>
-    </div>
+		{% else %}
+		<p>No estas logeado</p>
+		<a href="{% url 'login' %}">Iniciar sesion</a>
+		{% endif %}
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-  </body>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+			crossorigin="anonymous"
+		></script>
+	</body>
 </html>
