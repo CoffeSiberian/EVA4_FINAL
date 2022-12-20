@@ -46,16 +46,16 @@ def crearReserva(request):
             #Rescatar los datos del formulario
             res = form.cleaned_data
             #Crear un objeto pasiente
-            reserva = reserva(
-                fechaReserva = res['fecha Reserva'],
-                horaReserva = res['hora Reserva'],
-                nombreResponsable = res['nombre Responsable'],
+            print(res)
+            reserva = Reserva(
+                nombreResponsable = res['nombreResponsable'],
                 telefono = res['telefono'],
-                cantidadPersonas = res['cantidad Personas'],
+                fechaReserva = res['fechaReserva'],
+                horaReserva = res['horaReserva'],
+                cantidadPersonas = res['cantidadPersonas'],
                 estado = res['estado'],
                 observacion = res['observacion'],
             )
-            print("Envia")
             reserva.save()
             #Limpiar el form
             form = ''
@@ -85,11 +85,11 @@ def editarReserva(request, id):
 # Api con datos de la base de datos y serializador
 # El método GET obtiene todos los empleados
 # POST a guardar un nuevo registro
-@api_view(['GET', 'POST', 'DELETE', 'PUT'])
+@api_view(['GET', 'POST'])
 def listaReservas(request):
     if request.method == 'GET':
         #Obtener los datos de empleados
-        reservas = Reserva.objects.all()
+        reservas = Reserva.objects.all().order_by('fechaReserva')
         #Serializar los datos
         serializer = ReservaSerializers(reservas, many = True)
         #Retornar los datos serializados
