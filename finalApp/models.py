@@ -1,7 +1,8 @@
 from django.db import models
 
 # Create your models here.
-class reserva(models.Model):
+
+class Reserva(models.Model):
     nombreResponsable = models.CharField(max_length=100)
     telefono = models.CharField(max_length=50)
     fechaReserva = models.DateField()
